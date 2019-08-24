@@ -41,12 +41,25 @@ var shows = ["24", "The Big Bang Theory", "Diners, Drive-Ins, and Dives", "Bones
             $("#buttonPlacement").append(b);
         }
     }
+    $(document).on("click")
     $("add-show").on("click", function (event) {
         event.preventDefault();
         var showGif = $("#show-input").val().trim();
+        if (showGif==""){
+            return false;
+        }
         shows.push(showGif);
         renderButtons();
+        
     });
     $(document).on("click", ".show-btn", displayGifs);
     renderButtons();
+    var state = $(this).attr("data-state");
+      if (state === "still") {
+        $(this).attr("src", $(this).attr("data-animate"));
+        $(this).attr("data-state", "animate");
+      } else {
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
+      }
 });
