@@ -25,41 +25,45 @@ $(document).ready(function () {
         })
     };
     function displayGifs() {
-        var shows = $(this).attr("data-name");
-        var queryURL = "https//:api.giphy.com/v1/gifs/search?q="+shows+"api_key=C1CkQBwcSSghFUE65oOAqwjHvaZnFNwj&limit=15";
+        var show = $(this).attr("data-name");
+        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + show + "&api_key=C1CkQBwcSSghFUE65oOAqwjHvaZnFNwj&limit=15";
         console.log(queryURL);
         $.ajax({
             url: queryURL,
             method: "GET"
-        }).then(function (responce) {
-            console.log(responce);
-            $("#gifPlacement").empty();
-            //div to hold the gifs
-            var showDiv = $("<div class ='gif'>");
-            // get the rating
-            var rating = responce.data.rating;
-            // maknig a place to put the rating on screen
-            var ratingP = $("<p>").text("Rating: " + rating);
-            //appending the rating
-            showDiv.append(ratingP);
-            // getting the gif
-            var gifURL = responce.data.images_origial_url;
-            // making a place to put the gif
-            var gif2 = $("<img>").attr("src", gifURL);
-            // appending the gif
-            showDiv.append(gif2);
-            // 
-            $("#gifPlacement").append(showDiv)
-        });
+        })
+            .done(function (responce) {
+                var shows2 = responce.data;
+                $("#gifPlacement").empty();
+                console.log(responce);
+                for (var i = 0; i < shows2.length; i++) {
+                    //div to hold the gifs
+                    var showDiv = $("<div class ='gifD'>");
+                    // get the rating
+                    var rating = shows2.rating;
+                    // maknig a place to put the rating on screen
+                    var ratingP = $("<p>").text("Rating: " + rating);
+                    //appending the rating
+                    showDiv.append(ratingP);
+                    // getting the gif
+                    var gifURL = shows2.images.fixed_height_still;
+                    // making a place to put the gif
+                    var gif2 = $("<img>").attr("src", gifURL);
+                    // appending the gif
+                    showDiv.append(gif2);
+                    // 
+                    $("#gifPlacement").append(showDiv)
+                }
+            });
     }
 
     // $(document).on("click")
 
 
-   
+
     renderButtons();
     addbtn();
-     $(document).on("click", ".show-btn", displayGifs);
+    $(document).on("click", ".btn btn-success", displayGifs);
     //make this a function
     $(document).on("click", "image", function () {
         var state = $(this).attr("data-state");
@@ -71,5 +75,5 @@ $(document).ready(function () {
             $(this).attr("data-state", "still");
         }
     });
-    
+
 }) 
