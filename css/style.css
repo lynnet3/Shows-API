@@ -2,7 +2,13 @@ body{
     font-family: 'Gayathri', sans-serif;
 
 }
+
 #jumbo {
     text-align: center;
-    
+    background-color: slateblue;
+}
+
+#gifplacement{
+    position: relative;
+    width: 90%;
 }

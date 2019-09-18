@@ -48,7 +48,7 @@ $(document).ready(function () {
                     //appending the rating
                     showDiv.append(ratingP);
                     // getting the gif
-                    var gifURL = shows2[i].images.fixed_height_still.url;
+                    var gifURL = shows2[i].images.fixed_height.url;
                     // making a place to put the gif
                     var gif2 = $("<img>");
                     gif2.attr("src", gifURL);
