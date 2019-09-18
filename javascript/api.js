@@ -5,8 +5,9 @@ $(document).ready(function () {
         $("#buttonPlacement").empty();
         for (var i = 0; i < shows.length; i++) {
 
-            var b = $("<button>");
+            var b = $("<button id = 'that'>");
             b.addClass("btn btn-success");
+            // b.addid("that");
             b.attr("data-name", shows[i]);
             b.text(shows[i]);
             $("#buttonPlacement").append(b);
@@ -26,6 +27,7 @@ $(document).ready(function () {
     };
     function displayGifs() {
         var show = $(this).attr("data-name");
+        console.log("Show: " + show);
         var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + show + "&api_key=C1CkQBwcSSghFUE65oOAqwjHvaZnFNwj&limit=15";
         console.log(queryURL);
         $.ajax({
@@ -40,15 +42,17 @@ $(document).ready(function () {
                     //div to hold the gifs
                     var showDiv = $("<div class ='gifD'>");
                     // get the rating
-                    var rating = shows2.rating;
+                    var rating = shows2[i].rating;
                     // maknig a place to put the rating on screen
                     var ratingP = $("<p>").text("Rating: " + rating);
                     //appending the rating
                     showDiv.append(ratingP);
                     // getting the gif
-                    var gifURL = shows2.images.fixed_height_still;
+                    var gifURL = shows2[i].images.fixed_height_still.url;
                     // making a place to put the gif
-                    var gif2 = $("<img>").attr("src", gifURL);
+                    var gif2 = $("<img>");
+                    gif2.attr("src", gifURL);
+                   // gif2.attr();
                     // appending the gif
                     showDiv.append(gif2);
                     // 
@@ -60,13 +64,16 @@ $(document).ready(function () {
     // $(document).on("click")
 
 
-
+    // displayGifs();
     renderButtons();
     addbtn();
-    $(document).on("click", ".btn btn-success", displayGifs);
+    $(document).on("click", "#that", displayGifs);
+
+
     //make this a function
-    $(document).on("click", "image", function () {
+    $(document).on("click", "img", function () {
         var state = $(this).attr("data-state");
+        console.log("State: " + state)
         if (state === "still") {
             $(this).attr("src", $(this).attr("data-animate"));
             $(this).attr("data-state", "animate");
